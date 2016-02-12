@@ -34,37 +34,13 @@ public final class Grid {
     public Grid() {
         Cell[][] protoCells
                 = new Cell[Digit.values().length][Digit.values().length];
-        for (int i = 0; i < Digit.values().length; i++) {
-            for (int j = 0; j < Digit.values().length; j++) {
-                Coordinate coord = Coordinate.valueOf(
-                        Digit.values()[i], Digit.values()[j]);
-                Cell cell = new Cell(coord);
-                protoCells[i][j] = cell;
-                this.cells.put(coord, cell);
-            }
-        }
+        cellGen(protoCells);
 
         Group[] protoBoxes = new Group[Digit.values().length];
         Group[] protoColumns = new Group[Digit.values().length];
         Group[] protoRows = new Group[Digit.values().length];
 
-        for (Digit i : Digit.values()) {
-            Cell[] box = new Cell[Digit.values().length];
-            Cell[] column = new Cell[Digit.values().length];
-            Cell[] row = new Cell[Digit.values().length];
-
-            for (Digit j : Digit.values()) {
-                Digit a = Coordinate.getRowFromBoxAndNumber(i, j);
-                Digit b = Coordinate.getColumnFromBoxAndNumber(i, j);
-                box[j.ordinal()] = protoCells[a.ordinal()][b.ordinal()];
-                column[j.ordinal()] = protoCells[j.ordinal()][i.ordinal()];
-                row[j.ordinal()] = protoCells[i.ordinal()][j.ordinal()];
-            }
-
-            protoBoxes[i.ordinal()] = new Group(box);
-            protoColumns[i.ordinal()] = new Group(column);
-            protoRows[i.ordinal()] = new Group(row);
-        }
+        groupGen(protoCells, protoBoxes, protoColumns, protoRows);
         this.boxes = new SuperGroup(protoBoxes);
         this.columns = new SuperGroup(protoColumns);
         this.rows = new SuperGroup(protoRows);
@@ -86,6 +62,38 @@ public final class Grid {
             for (int j = 0; j < cells[i].length; j++) {
                 this.setCell(Coordinate.valueOf(
                         Digit.values()[i], Digit.values()[j]), cells[i][j]);
+            }
+        }
+    }
+
+    private void groupGen(Cell[][] protoCells, Group[] protoBoxes, Group[] protoColumns, Group[] protoRows) {
+        for (Digit i : Digit.values()) {
+            Cell[] box = new Cell[Digit.values().length];
+            Cell[] column = new Cell[Digit.values().length];
+            Cell[] row = new Cell[Digit.values().length];
+
+            for (Digit j : Digit.values()) {
+                Digit a = Coordinate.getRowFromBoxAndNumber(i, j);
+                Digit b = Coordinate.getColumnFromBoxAndNumber(i, j);
+                box[j.ordinal()] = protoCells[a.ordinal()][b.ordinal()];
+                column[j.ordinal()] = protoCells[j.ordinal()][i.ordinal()];
+                row[j.ordinal()] = protoCells[i.ordinal()][j.ordinal()];
+            }
+
+            protoBoxes[i.ordinal()] = new Group(box);
+            protoColumns[i.ordinal()] = new Group(column);
+            protoRows[i.ordinal()] = new Group(row);
+        }
+    }
+
+    private void cellGen(Cell[][] protoCells) {
+        for (int i = 0; i < Digit.values().length; i++) {
+            for (int j = 0; j < Digit.values().length; j++) {
+                Coordinate coord = Coordinate.valueOf(
+                        Digit.values()[i], Digit.values()[j]);
+                Cell cell = new Cell(coord);
+                protoCells[i][j] = cell;
+                this.cells.put(coord, cell);
             }
         }
     }

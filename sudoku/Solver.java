@@ -61,6 +61,10 @@ public class Solver {
             this.registers.put(digit, new Grid());
         }
 
+        initRegisters();
+    }
+
+    private void initRegisters() {
         for (Digit row : Digit.values()) {
             for (Digit column : Digit.values()) {
                 Cell[] vertical = new Cell[Digit.values().length];
@@ -76,53 +80,54 @@ public class Solver {
     }
 
     public void solve() {
-        //single candidate
         while (this.hasChanged) {
             this.updateRegisters();
-            this.registers.forEach((Digit i, Grid register) -> {
-                register.forEachBox((Group box) -> {
-                    Digit j = singleCandidate(box);
-                    if (j != null) {
-                        this.puzzle.getCell(box.getCell(j).getCoordinate())
-                                .setContents(i);
-                        this.hasChanged = true;
-                    }
-                });
-                register.forEachRow((Group row) -> {
-                    Digit j = singleCandidate(row);
-                    if (j != null) {
-                        this.puzzle.getCell(row.getCell(j).getCoordinate())
-                                .setContents(i);
-                        this.hasChanged = true;
-                    }
-                });
-                register.forEachColumn((Group column) -> {
-                    Digit j = singleCandidate(column);
-                    if (j != null) {
-                        this.puzzle.getCell(column.getCell(j).getCoordinate())
-                                .setContents(i);
-                        this.hasChanged = true;
-                    }
-                });
-            });
-            this.cellVerticals.forEach((Coordinate coordinate, Group vertical)
-                    -> {
-                Digit i = singleCandidate(vertical);
-                if (i != null) {
-                    this.puzzle.getCell(coordinate).setContents(i);
-                    this.hasChanged = true;
-                }
-            });
 
-            //only use advanced techniques if needed
+            singleCandidate();
             if (this.hasChanged) {
                 continue;
             }
-            //naked pairs
+
             for (Digit i : Digit.values()) {
 
             }
         }
+    }
+
+    private void singleCandidate() {
+        this.registers.forEach((Digit i, Grid register) -> {
+            register.forEachBox((Group box) -> {
+                Digit j = singleCandidate(box);
+                if (j != null) {
+                    this.puzzle.getCell(box.getCell(j).getCoordinate())
+                            .setContents(i);
+                    this.hasChanged = true;
+                }
+            });
+            register.forEachRow((Group row) -> {
+                Digit j = singleCandidate(row);
+                if (j != null) {
+                    this.puzzle.getCell(row.getCell(j).getCoordinate())
+                            .setContents(i);
+                    this.hasChanged = true;
+                }
+            });
+            register.forEachColumn((Group column) -> {
+                Digit j = singleCandidate(column);
+                if (j != null) {
+                    this.puzzle.getCell(column.getCell(j).getCoordinate())
+                            .setContents(i);
+                    this.hasChanged = true;
+                }
+            });
+        });
+        this.cellVerticals.forEach((Coordinate coordinate, Group vertical) -> {
+            Digit i = singleCandidate(vertical);
+            if (i != null) {
+                this.puzzle.getCell(coordinate).setContents(i);
+                this.hasChanged = true;
+            }
+        });
     }
 
     public void updateRegisters() {
