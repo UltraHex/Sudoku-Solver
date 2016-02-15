@@ -79,6 +79,10 @@ public class Solver {
 
     public void solve() {
         while (this.hasChanged) {
+            if (this.isComplete()) {
+                return;
+            }
+
             this.updateRegisters();
 
             this.singleCandidate();
