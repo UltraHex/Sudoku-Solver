@@ -32,7 +32,7 @@ public class Solver {
         int count = 0;
         for (Map.Entry<Digit, Cell> entry : group.getCells().entrySet()) {
             Cell cell = entry.getValue();
-            if (cell == null) {
+            if (cell.getContents() == null) {
                 if (count == digit.getValue()) {
                     return null;
                 }
