@@ -27,19 +27,25 @@ import java.util.Map;
  */
 public class Solver {
 
-    private static Digit singleCandidate(Group group) {
-        Digit candidate = null;
+    private static Digit[] candidates(Group group, Digit digit) {
+        Digit[] candidates = new Digit[digit.getValue()];
+        int count = 0;
         for (Map.Entry<Digit, Cell> entry : group.getCells().entrySet()) {
             Cell cell = entry.getValue();
-            if (cell.getContents() == null) {
-                if (candidate == null) {
-                    candidate = entry.getKey();
-                } else {
+            if (cell == null) {
+                if (count == digit.getValue()) {
                     return null;
                 }
+
+                candidates[count] = entry.getKey();
+                count++;
             }
         }
-        return candidate;
+
+        if (count == digit.getValue()) {
+            return candidates;
+        }
+        return null;
     }
 
     private final LinkedHashMap<Digit, SuperGroup> boxVerticals
@@ -73,10 +79,6 @@ public class Solver {
             this.singleCandidate();
             if (this.hasChanged) {
                 continue;
-            }
-
-            for (Digit i : Digit.values()) {
-
             }
         }
     }
@@ -118,35 +120,35 @@ public class Solver {
     private void singleCandidate() {
         this.registers.forEach((Digit i, Grid register) -> {
             register.forEachBox((Group box) -> {
-                Digit j = singleCandidate(box);
-                if (j != null) {
-                    this.puzzle.getCell(box.getCell(j).getCoordinate())
-                            .setContents(i);
+                Digit[] candidates = candidates(box, Digit.ONE);
+                if (candidates != null) {
+                    this.puzzle.getCell(box.getCell(candidates[0])
+                            .getCoordinate()).setContents(i);
                     this.hasChanged = true;
                 }
             });
             register.forEachRow((Group row) -> {
-                Digit j = singleCandidate(row);
-                if (j != null) {
-                    this.puzzle.getCell(row.getCell(j).getCoordinate())
-                            .setContents(i);
+                Digit[] candidates = candidates(row, Digit.ONE);
+                if (candidates != null) {
+                    this.puzzle.getCell(row.getCell(candidates[0])
+                            .getCoordinate()).setContents(i);
                     this.hasChanged = true;
                 }
             });
             register.forEachColumn((Group column) -> {
-                Digit j = singleCandidate(column);
-                if (j != null) {
-                    this.puzzle.getCell(column.getCell(j).getCoordinate())
-                            .setContents(i);
+                Digit[] candidates = candidates(column, Digit.ONE);
+                if (candidates != null) {
+                    this.puzzle.getCell(column.getCell(candidates[0])
+                            .getCoordinate()).setContents(i);
                     this.hasChanged = true;
                 }
             });
         });
 
         this.cellVerticals.forEach((Coordinate coordinate, Group vertical) -> {
-            Digit i = singleCandidate(vertical);
-            if (i != null) {
-                this.puzzle.getCell(coordinate).setContents(i);
+            Digit[] candidates = candidates(vertical, Digit.ONE);
+            if (candidates != null) {
+                this.puzzle.getCell(coordinate).setContents(candidates[0]);
                 this.hasChanged = true;
             }
         });
