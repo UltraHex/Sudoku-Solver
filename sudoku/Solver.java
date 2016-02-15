@@ -20,6 +20,7 @@ package sudoku;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 import static sudoku.Coordinate.COORDINATES;
 import static sudoku.Digit.ONE;
 import static sudoku.Digit.TWO;
@@ -107,22 +108,19 @@ public class Solver {
                     Coordinate coordinate1 = cell1.getCoordinate();
                     Coordinate coordinate2 = cell2.getCoordinate();
 
+                    Consumer<Cell> eliminate = (Cell cell) -> {
+                        if (!cell.getCoordinate().toBoxCoordinate().getA()
+                                .equals(coordinate1.toBoxCoordinate().getA())) {
+                            cell.setContents(ONE);
+                        }
+                    };
+
                     if (coordinate1.getA().equals(coordinate2.getA())) {
                         register.forEachCellInRow(coordinate1.getA(),
-                                (Cell cell) -> {
-                            if (!cell.getCoordinate().toBoxCoordinate().getA()
-                                    .equals(coordinate1.toBoxCoordinate().getA())) {
-                                cell.setContents(ONE);
-                            }
-                        });
+                                eliminate);
                     } else if (coordinate1.getB().equals(coordinate2.getB())) {
                         register.forEachCellInColumn(coordinate1.getB(),
-                                (Cell cell) -> {
-                            if (!cell.getCoordinate().toBoxCoordinate().getA()
-                                    .equals(coordinate1.toBoxCoordinate().getA())) {
-                                cell.setContents(ONE);
-                            }
-                        });
+                                eliminate);
                     }
                 }
             });
