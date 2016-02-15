@@ -27,7 +27,7 @@ import java.util.ArrayList;
  */
 public final class Coordinate {
 
-    private static final ArrayList<Coordinate> COORDINATES;
+    public static final ArrayList<Coordinate> COORDINATES;
 
     static {
         COORDINATES = new ArrayList<>(81);
