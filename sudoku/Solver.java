@@ -72,6 +72,11 @@ public class Solver {
         this.initRegisters();
     }
 
+    public boolean isComplete() {
+        return Coordinate.COORDINATES.stream().noneMatch((coord)
+                -> (this.puzzle.getCell(coord).getContents() == null));
+    }
+
     public void solve() {
         while (this.hasChanged) {
             this.updateRegisters();
