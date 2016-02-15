@@ -20,6 +20,9 @@ package sudoku;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import static sudoku.Coordinate.COORDINATES;
+import static sudoku.Digit.ONE;
+import static sudoku.Digit.TWO;
 
 /**
  *
@@ -73,7 +76,7 @@ public class Solver {
     }
 
     public boolean isComplete() {
-        return Coordinate.COORDINATES.stream().noneMatch((coord)
+        return COORDINATES.stream().noneMatch((coord)
                 -> (this.puzzle.getCell(coord).getContents() == null));
     }
 
@@ -97,7 +100,7 @@ public class Solver {
     private void candidateLines() {
         this.registers.forEach((Digit digit, Grid register) -> {
             register.forEachBox((Group box) -> {
-                Digit[] candidates = candidates(box, Digit.TWO);
+                Digit[] candidates = candidates(box, TWO);
                 if (candidates != null) {
                     Cell cell1 = box.getCell(candidates[0]);
                     Cell cell2 = box.getCell(candidates[1]);
@@ -109,7 +112,7 @@ public class Solver {
                                 (Cell cell) -> {
                             if (!cell.getCoordinate().toBoxCoordinate().getA()
                                     .equals(coordinate1.toBoxCoordinate().getA())) {
-                                cell.setContents(Digit.ONE);
+                                cell.setContents(ONE);
                             }
                         });
                     } else if (coordinate1.getB().equals(coordinate2.getB())) {
@@ -117,7 +120,7 @@ public class Solver {
                                 (Cell cell) -> {
                             if (!cell.getCoordinate().toBoxCoordinate().getA()
                                     .equals(coordinate1.toBoxCoordinate().getA())) {
-                                cell.setContents(Digit.ONE);
+                                cell.setContents(ONE);
                             }
                         });
                     }
@@ -144,7 +147,7 @@ public class Solver {
     private void singleCandidate() {
         this.registers.forEach((Digit i, Grid register) -> {
             register.forEachBox((Group box) -> {
-                Digit[] candidates = candidates(box, Digit.ONE);
+                Digit[] candidates = candidates(box, ONE);
                 if (candidates != null) {
                     this.puzzle.getCell(box.getCell(candidates[0])
                             .getCoordinate()).setContents(i);
@@ -152,7 +155,7 @@ public class Solver {
                 }
             });
             register.forEachRow((Group row) -> {
-                Digit[] candidates = candidates(row, Digit.ONE);
+                Digit[] candidates = candidates(row, ONE);
                 if (candidates != null) {
                     this.puzzle.getCell(row.getCell(candidates[0])
                             .getCoordinate()).setContents(i);
@@ -160,7 +163,7 @@ public class Solver {
                 }
             });
             register.forEachColumn((Group column) -> {
-                Digit[] candidates = candidates(column, Digit.ONE);
+                Digit[] candidates = candidates(column, ONE);
                 if (candidates != null) {
                     this.puzzle.getCell(column.getCell(candidates[0])
                             .getCoordinate()).setContents(i);
@@ -170,7 +173,7 @@ public class Solver {
         });
 
         this.cellVerticals.forEach((Coordinate coordinate, Group vertical) -> {
-            Digit[] candidates = candidates(vertical, Digit.ONE);
+            Digit[] candidates = candidates(vertical, ONE);
             if (candidates != null) {
                 this.puzzle.getCell(coordinate).setContents(candidates[0]);
                 this.hasChanged = true;
@@ -183,16 +186,16 @@ public class Solver {
             if (cell.getContents() != null) {
                 this.cellVerticals.get(cell.getCoordinate()).forEachCell(
                         (Cell c)
-                        -> c.setContents(Digit.ONE));
+                        -> c.setContents(ONE));
 
                 Grid reg = this.registers.get(cell.getContents());
                 reg.forEachCellInBox(
                         cell.getCoordinate().toBoxCoordinate().getA(), (Cell c)
-                        -> c.setContents(Digit.ONE));
+                        -> c.setContents(ONE));
                 reg.forEachCellInRow(cell.getCoordinate().getA(), (Cell c)
-                        -> c.setContents(Digit.ONE));
+                        -> c.setContents(ONE));
                 reg.forEachCellInColumn(cell.getCoordinate().getB(), (Cell c)
-                        -> c.setContents(Digit.ONE));
+                        -> c.setContents(ONE));
             }
         });
     }
