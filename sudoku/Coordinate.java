@@ -55,7 +55,6 @@ public final class Coordinate {
      * 7 8 9 \7 8 9/
      */
     // Speciosa mathematica. Math is beautiful.
-    //TODO generalize formulas
     public static Digit getBoxNumber(Digit row, Digit column) {
         int root = (int) Math.sqrt(Digit.values().length);
         int coarse = root * (row.ordinal() / root);
