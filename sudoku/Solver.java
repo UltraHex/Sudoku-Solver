@@ -88,25 +88,6 @@ public class Solver {
         }
     }
 
-    public void updateRegisters() {
-        this.puzzle.forEachCell((Cell cell) -> {
-            if (cell.getContents() != null) {
-                this.cellVerticals.get(cell.getCoordinate()).forEachCell(
-                        (Cell c)
-                        -> c.setContents(Digit.ONE));
-
-                Grid reg = this.registers.get(cell.getContents());
-                reg.forEachCellInBox(
-                        cell.getCoordinate().toBoxCoordinate().getA(), (Cell c)
-                        -> c.setContents(Digit.ONE));
-                reg.forEachCellInRow(cell.getCoordinate().getA(), (Cell c)
-                        -> c.setContents(Digit.ONE));
-                reg.forEachCellInColumn(cell.getCoordinate().getB(), (Cell c)
-                        -> c.setContents(Digit.ONE));
-            }
-        });
-    }
-
     private void initRegisters() {
         for (Digit row : Digit.values()) {
             for (Digit column : Digit.values()) {
@@ -155,6 +136,25 @@ public class Solver {
             if (candidates != null) {
                 this.puzzle.getCell(coordinate).setContents(candidates[0]);
                 this.hasChanged = true;
+            }
+        });
+    }
+
+    private void updateRegisters() {
+        this.puzzle.forEachCell((Cell cell) -> {
+            if (cell.getContents() != null) {
+                this.cellVerticals.get(cell.getCoordinate()).forEachCell(
+                        (Cell c)
+                        -> c.setContents(Digit.ONE));
+
+                Grid reg = this.registers.get(cell.getContents());
+                reg.forEachCellInBox(
+                        cell.getCoordinate().toBoxCoordinate().getA(), (Cell c)
+                        -> c.setContents(Digit.ONE));
+                reg.forEachCellInRow(cell.getCoordinate().getA(), (Cell c)
+                        -> c.setContents(Digit.ONE));
+                reg.forEachCellInColumn(cell.getCoordinate().getB(), (Cell c)
+                        -> c.setContents(Digit.ONE));
             }
         });
     }
