@@ -89,7 +89,41 @@ public class Solver {
             if (this.hasChanged) {
                 continue;
             }
+
+            this.candidateLines();
         }
+    }
+
+    private void candidateLines() {
+        this.registers.forEach((Digit digit, Grid register) -> {
+            register.forEachBox((Group box) -> {
+                Digit[] candidates = candidates(box, Digit.TWO);
+                if (candidates != null) {
+                    Cell cell1 = box.getCell(candidates[0]);
+                    Cell cell2 = box.getCell(candidates[1]);
+                    Coordinate coordinate1 = cell1.getCoordinate();
+                    Coordinate coordinate2 = cell2.getCoordinate();
+
+                    if (coordinate1.getA().equals(coordinate2.getA())) {
+                        register.forEachCellInRow(coordinate1.getA(),
+                                (Cell cell) -> {
+                            if (!cell.getCoordinate().toBoxCoordinate().getA()
+                                    .equals(coordinate1.toBoxCoordinate().getA())) {
+                                cell.setContents(Digit.ONE);
+                            }
+                        });
+                    } else if (coordinate1.getB().equals(coordinate2.getB())) {
+                        register.forEachCellInColumn(coordinate1.getB(),
+                                (Cell cell) -> {
+                            if (!cell.getCoordinate().toBoxCoordinate().getA()
+                                    .equals(coordinate1.toBoxCoordinate().getA())) {
+                                cell.setContents(Digit.ONE);
+                            }
+                        });
+                    }
+                }
+            });
+        });
     }
 
     private void initRegisters() {
