@@ -63,7 +63,41 @@ public class Solver {
             this.registers.put(digit, new Grid());
         }
 
-        initRegisters();
+        this.initRegisters();
+    }
+
+    public void solve() {
+        while (this.hasChanged) {
+            this.updateRegisters();
+
+            this.singleCandidate();
+            if (this.hasChanged) {
+                continue;
+            }
+
+            for (Digit i : Digit.values()) {
+
+            }
+        }
+    }
+
+    public void updateRegisters() {
+        this.puzzle.forEachCell((Cell cell) -> {
+            if (cell.getContents() != null) {
+                this.cellVerticals.get(cell.getCoordinate()).forEachCell(
+                        (Cell c)
+                        -> c.setContents(Digit.ONE));
+
+                Grid reg = this.registers.get(cell.getContents());
+                reg.forEachCellInBox(
+                        cell.getCoordinate().toBoxCoordinate().getA(), (Cell c)
+                        -> c.setContents(Digit.ONE));
+                reg.forEachCellInRow(cell.getCoordinate().getA(), (Cell c)
+                        -> c.setContents(Digit.ONE));
+                reg.forEachCellInColumn(cell.getCoordinate().getB(), (Cell c)
+                        -> c.setContents(Digit.ONE));
+            }
+        });
     }
 
     private void initRegisters() {
@@ -77,21 +111,6 @@ public class Solver {
                 }
                 this.cellVerticals.put(Coordinate.valueOf(row, column),
                         new Group(vertical));
-            }
-        }
-    }
-
-    public void solve() {
-        while (this.hasChanged) {
-            this.updateRegisters();
-
-            singleCandidate();
-            if (this.hasChanged) {
-                continue;
-            }
-
-            for (Digit i : Digit.values()) {
-
             }
         }
     }
@@ -123,30 +142,12 @@ public class Solver {
                 }
             });
         });
+
         this.cellVerticals.forEach((Coordinate coordinate, Group vertical) -> {
             Digit i = singleCandidate(vertical);
             if (i != null) {
                 this.puzzle.getCell(coordinate).setContents(i);
                 this.hasChanged = true;
-            }
-        });
-    }
-
-    public void updateRegisters() {
-        this.puzzle.forEachCell((Cell cell) -> {
-            if (cell.getContents() != null) {
-                this.cellVerticals.get(cell.getCoordinate()).forEachCell(
-                        (Cell c)
-                        -> c.setContents(Digit.ONE));
-
-                Grid reg = this.registers.get(cell.getContents());
-                reg.forEachCellInBox(
-                        cell.getCoordinate().toBoxCoordinate().getA(), (Cell c)
-                        -> c.setContents(Digit.ONE));
-                reg.forEachCellInRow(cell.getCoordinate().getA(), (Cell c)
-                        -> c.setContents(Digit.ONE));
-                reg.forEachCellInColumn(cell.getCoordinate().getB(), (Cell c)
-                        -> c.setContents(Digit.ONE));
             }
         });
     }
