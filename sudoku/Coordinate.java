@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package sudoku;
 
 import java.util.ArrayList;
@@ -23,88 +24,88 @@ import java.util.ArrayList;
 /**
  * Immutable
  *
- * @author Matthew William Noel <matthew.william.noel@gmail.com>
+ * @author Matthew William Noel
  */
 public final class Coordinate {
 
-    public static final ArrayList<Coordinate> COORDINATES;
+  public static final ArrayList<Coordinate> COORDINATES;
 
-    static {
-        COORDINATES = new ArrayList<>(81);
-        for (Digit a : Digit.values()) {
-            for (Digit b : Digit.values()) {
-                COORDINATES.add(new Coordinate(a, b));
-            }
-        }
+  static {
+    COORDINATES = new ArrayList<>(81);
+    for (Digit a : Digit.values()) {
+      for (Digit b : Digit.values()) {
+        COORDINATES.add(new Coordinate(a, b));
+      }
     }
+  }
 
-    /*
-     * These functions translate between coordinates like this:
-     *
-     *  1 2 3 ...
-     * 1
-     * 2
-     * 3
-     *...
-     *
-     * and coordinates like this:
-     *
-     * grid    box
-     * 1 2 3 /1 2 3\
-     * 4 5 6<|4 5 6|
-     * 7 8 9 \7 8 9/
-     */
-    // Speciosa mathematica. Math is beautiful.
-    public static Digit getBoxNumber(Digit row, Digit column) {
-        int root = (int) Math.sqrt(Digit.values().length);
-        int coarse = root * (row.ordinal() / root);
-        int fine = column.ordinal() / root;
-        return Digit.values()[coarse + fine];
-    }
+  /*
+   * These functions translate between coordinates like this:
+   *
+   *  1 2 3 ...
+   * 1
+   * 2
+   * 3
+   *...
+   *
+   * and coordinates like this:
+   *
+   * grid    box
+   * 1 2 3 /1 2 3\
+   * 4 5 6<|4 5 6|
+   * 7 8 9 \7 8 9/
+   */
+  // Speciosa mathematica. Math is beautiful.
+  public static Digit getBoxNumber(Digit row, Digit column) {
+    int root = (int) Math.sqrt(Digit.values().length);
+    int coarse = root * (row.ordinal() / root);
+    int fine = column.ordinal() / root;
+    return Digit.values()[coarse + fine];
+  }
 
-    public static Digit getColumnFromBoxAndNumber(Digit box, Digit number) {
-        int root = (int) Math.sqrt(Digit.values().length);
-        int coarse = root * (box.ordinal() % root);
-        int fine = number.ordinal() % root;
-        return Digit.values()[coarse + fine];
-    }
+  public static Digit getColumnFromBoxAndNumber(Digit box, Digit number) {
+    int root = (int) Math.sqrt(Digit.values().length);
+    int coarse = root * (box.ordinal() % root);
+    int fine = number.ordinal() % root;
+    return Digit.values()[coarse + fine];
+  }
 
-    public static Digit getNumberInBox(Digit row, Digit column) {
-        int root = (int) Math.sqrt(Digit.values().length);
-        int coarse = root * (row.ordinal() % root);
-        int fine = column.ordinal() % root;
-        return Digit.values()[coarse + fine];
-    }
+  public static Digit getNumberInBox(Digit row, Digit column) {
+    int root = (int) Math.sqrt(Digit.values().length);
+    int coarse = root * (row.ordinal() % root);
+    int fine = column.ordinal() % root;
+    return Digit.values()[coarse + fine];
+  }
 
-    public static Digit getRowFromBoxAndNumber(Digit box, Digit number) {
-        int root = (int) Math.sqrt(Digit.values().length);
-        int coarse = root * (box.ordinal() / root);
-        int fine = number.ordinal() / root;
-        return Digit.values()[coarse + fine];
-    }
+  public static Digit getRowFromBoxAndNumber(Digit box, Digit number) {
+    int root = (int) Math.sqrt(Digit.values().length);
+    int coarse = root * (box.ordinal() / root);
+    int fine = number.ordinal() / root;
+    return Digit.values()[coarse + fine];
+  }
 
-    public static Coordinate valueOf(Digit a, Digit b) {
-        return COORDINATES.get(COORDINATES.indexOf(new Coordinate(a, b)));
-    }
+  public static Coordinate valueOf(Digit a, Digit b) {
+    return COORDINATES.get(COORDINATES.indexOf(new Coordinate(a, b)));
+  }
 
-    private final Digit a;
-    private final Digit b;
+  private final Digit a;
+  private final Digit b;
 
-    private Coordinate(Digit a, Digit b) {
-        this.a = a;
-        this.b = b;
-    }
+  private Coordinate(Digit a, Digit b) {
+    this.a = a;
+    this.b = b;
+  }
 
-    public Digit getA() {
-        return this.a;
-    }
+  public Digit getA() {
+    return this.a;
+  }
 
-    public Digit getB() {
-        return this.b;
-    }
+  public Digit getB() {
+    return this.b;
+  }
 
-    public Coordinate toBoxCoordinate() {
-        return Coordinate.valueOf(getBoxNumber(this.a, this.b),
-                getNumberInBox(this.a, this.b));
-    }
+  public Coordinate toBoxCoordinate() {
+    return Coordinate.valueOf(getBoxNumber(this.a, this.b),
+        getNumberInBox(this.a, this.b));
+  }
 }

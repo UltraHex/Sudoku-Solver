@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package sudoku;
 
 import java.util.LinkedHashMap;
@@ -24,57 +25,56 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
- * Mutable
  *
- * @author Matthew William Noel <matthew.william.noel@gmail.com>
+ * @author Matthew William Noel
  */
 public class SuperGroup {
 
-    private final LinkedHashMap<Digit, Group> groups
-            = new LinkedHashMap<>(Digit.values().length);
+  private final LinkedHashMap<Digit, Group> groups =
+       new LinkedHashMap<>(Digit.values().length);
 
-    public SuperGroup(Group[] groups) {
-        if (groups.length != Digit.values().length) {
-            throw new IllegalArgumentException(
-                    "SuperGroups must contain exactly " + Digit.values().length
-                    + " Groups");
-        }
-        for (int i = 0; i < groups.length; i++) {
-            this.groups.put(Digit.values()[i], groups[i]);
-        }
+  public SuperGroup(Group[] groups) {
+    if (groups.length != Digit.values().length) {
+      throw new IllegalArgumentException(
+          "SuperGroups must contain exactly " + Digit.values().length
+          + " Groups");
     }
+    for (int i = 0; i < groups.length; i++) {
+      this.groups.put(Digit.values()[i], groups[i]);
+    }
+  }
 
-    @Override
-    @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
-    public boolean equals(Object obj) {
-        if (obj == null || this.getClass() != obj.getClass()) {
-            return false;
-        }
-        final SuperGroup other = (SuperGroup) obj;
-        return Objects.equals(this.groups, other.groups);
+  @Override
+  @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
+  public boolean equals(Object obj) {
+    if (obj == null || this.getClass() != obj.getClass()) {
+      return false;
     }
+    final SuperGroup other = (SuperGroup) obj;
+    return Objects.equals(this.groups, other.groups);
+  }
 
-    public void forEach(BiConsumer<? super Digit, ? super Group> action) {
-        this.groups.forEach(action);
-    }
+  public void forEach(BiConsumer<? super Digit, ? super Group> action) {
+    this.groups.forEach(action);
+  }
 
-    public void forEachGroup(Consumer<? super Group> action) {
-        this.groups.values().forEach(action);
-    }
+  public void forEachGroup(Consumer<? super Group> action) {
+    this.groups.values().forEach(action);
+  }
 
-    public Group getGroup(Digit digit) {
-        return this.groups.get(digit);
-    }
+  public Group getGroup(Digit digit) {
+    return this.groups.get(digit);
+  }
 
-    @SuppressWarnings("unchecked")
-    public LinkedHashMap<Digit, Group> getGroups() {
-        return (LinkedHashMap<Digit, Group>) this.groups.clone();
-    }
+  @SuppressWarnings("unchecked")
+  public LinkedHashMap<Digit, Group> getGroups() {
+    return (LinkedHashMap<Digit, Group>) this.groups.clone();
+  }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.groups);
-        return hash;
-    }
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash = 89 * hash + Objects.hashCode(this.groups);
+    return hash;
+  }
 }

@@ -16,62 +16,62 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package sudoku;
 
 import java.util.Objects;
 
 /**
- * Mutable
  *
- * @author Matthew William Noel <matthew.william.noel@gmail.com>
+ * @author Matthew William Noel
  */
 public final class Cell implements Cloneable {
 
-    private Digit contents; //immutable
-    private final Coordinate coordinate; //immutable
+  private Digit contents; //immutable
+  private final Coordinate coordinate; //immutable
 
-    Cell(Coordinate coordinate, Digit contents) {
-        this.coordinate = coordinate;
-        this.contents = contents;
-    }
+  Cell(Coordinate coordinate, Digit contents) {
+    this.coordinate = coordinate;
+    this.contents = contents;
+  }
 
-    Cell(Coordinate coordinate) {
-        this(coordinate, null);
-    }
+  Cell(Coordinate coordinate) {
+    this(coordinate, null);
+  }
 
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
+  @Override
+  public Object clone() throws CloneNotSupportedException {
+    return super.clone();
+  }
 
-    @Override
-    public boolean equals(Object obj) {
-        return (obj instanceof Cell) ? this.contents.equals(
-                ((Cell) obj).getContents()) : false;
-    }
+  @Override
+  public boolean equals(Object obj) {
+    return (obj instanceof Cell) ? this.contents.equals(
+        ((Cell) obj).getContents()) : false;
+  }
 
-    public Digit getContents() {
-        return this.contents;
-    }
+  public Digit getContents() {
+    return this.contents;
+  }
 
-    public void setContents(Digit contents) {
-        this.contents = contents;
-    }
+  public void setContents(Digit contents) {
+    this.contents = contents;
+  }
 
-    public Coordinate getCoordinate() {
-        return this.coordinate;
-    }
+  public Coordinate getCoordinate() {
+    return this.coordinate;
+  }
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + Objects.hashCode(this.contents);
-        hash = 67 * hash + Objects.hashCode(this.coordinate);
-        return hash;
-    }
+  @Override
+  public int hashCode() {
+    int hash = 5;
+    hash = 67 * hash + Objects.hashCode(this.contents);
+    hash = 67 * hash + Objects.hashCode(this.coordinate);
+    return hash;
+  }
 
-    @Override
-    public String toString() {
-        return String.valueOf(this.contents);
-    }
+  @Override
+  public String toString() {
+    return String.valueOf(this.contents);
+  }
 }

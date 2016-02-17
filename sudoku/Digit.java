@@ -16,35 +16,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package sudoku;
 
 /**
- * Immutable
  *
- * @author Matthew William Noel <matthew.william.noel@gmail.com>
+ * @author Matthew William Noel
  */
 public enum Digit {
 
-    ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8),
-    NINE(9);
+  ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8),
+  NINE(9);
 
-    private final int value;
+  private final int value;
 
-    Digit(int value) {
-        this.value = value;
-    }
+  Digit(int value) {
+    this.value = value;
+  }
 
-    public static Digit valueOf(int i) {
-        return Digit.values()[i - 1];
-    }
+  public static Digit valueOf(int i) {
+    return Digit.values()[i - 1];
+  }
 
-    public int getValue() {
-        return this.value;
-    }
+  public int getValue() {
+    return this.value;
+  }
 
-    @Override
-    public String toString() {
-        return String.valueOf(this.value);
-    }
+  @Override
+  public String toString() {
+    return String.valueOf(this.value);
+  }
 
 }
