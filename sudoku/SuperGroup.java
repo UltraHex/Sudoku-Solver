@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Matthew William Noel <matthew.william.noel@gmail.com>
+ * Copyright (C) 2016 Matthew William Noel
  *
  * This file is part of Sudoku-Solver.
  *
@@ -31,7 +31,7 @@ import java.util.function.Consumer;
 public class SuperGroup {
 
   private final LinkedHashMap<Digit, Group> groups =
-       new LinkedHashMap<>(Digit.values().length);
+      new LinkedHashMap<>(Digit.values().length);
 
   public SuperGroup(Group[] groups) {
     if (groups.length != Digit.values().length) {

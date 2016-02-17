@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Matthew William Noel <matthew.william.noel@gmail.com>
+ * Copyright (C) 2015 Matthew William Noel
  *
  * This file is part of Sudoku-Solver.
  *
@@ -30,13 +30,13 @@ public final class Grid {
 
   private final SuperGroup boxes;
   private final LinkedHashMap<Coordinate, Cell> cells =
-       new LinkedHashMap<>(Digit.values().length ^ 2);
+      new LinkedHashMap<>(Digit.values().length ^ 2);
   private final SuperGroup columns;
   private final SuperGroup rows;
 
   public Grid() {
     Cell[][] protoCells =
-         new Cell[Digit.values().length][Digit.values().length];
+        new Cell[Digit.values().length][Digit.values().length];
     this.cellGen(protoCells);
 
     Group[] protoBoxes = new Group[Digit.values().length];

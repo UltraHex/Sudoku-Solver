@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Matthew William Noel <matthew.william.noel@gmail.com>
+ * Copyright (C) 2015 Matthew William Noel
  *
  * This file is part of Sudoku-Solver.
  *

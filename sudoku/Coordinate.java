@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Matthew William Noel <matthew.william.noel@gmail.com>
+ * Copyright (C) 2016 Matthew William Noel
  *
  * This file is part of Sudoku-Solver.
  *
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 /**
  * Immutable
- *
+ * <p>
  * @author Matthew William Noel
  */
 public final class Coordinate {
