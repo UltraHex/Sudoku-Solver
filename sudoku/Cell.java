@@ -72,6 +72,6 @@ public final class Cell implements Cloneable {
 
   @Override
   public String toString() {
-    return String.valueOf(this.contents);
+    return this.contents == null ? " " : String.valueOf(this.contents);
   }
 }
