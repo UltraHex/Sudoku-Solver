@@ -85,6 +85,7 @@ public class Solver {
 
   public void solve() {
     while (this.hasChanged) {
+      this.hasChanged = false;
       if (this.isComplete()) {
         return;
       }
