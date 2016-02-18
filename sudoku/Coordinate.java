@@ -20,6 +20,7 @@
 package sudoku;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Immutable
@@ -96,12 +97,33 @@ public final class Coordinate {
     this.b = b;
   }
 
+  @Override
+  @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+    if (this.getClass() != obj.getClass()) {
+      return false;
+    }
+    final Coordinate other = (Coordinate) obj;
+    return this.a == other.a && this.b == other.b;
+  }
+
   public Digit getA() {
     return this.a;
   }
 
   public Digit getB() {
     return this.b;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 3;
+    hash = 89 * hash + Objects.hashCode(this.a);
+    hash = 89 * hash + Objects.hashCode(this.b);
+    return hash;
   }
 
   public Coordinate toBoxCoordinate() {
