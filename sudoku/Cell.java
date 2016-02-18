@@ -27,8 +27,8 @@ import java.util.Objects;
  */
 public final class Cell implements Cloneable {
 
-  private Digit contents; //immutable
-  private final Coordinate coordinate; //immutable
+  private Digit contents;
+  private final Coordinate coordinate;
 
   Cell(Coordinate coordinate, Digit contents) {
     this.coordinate = coordinate;
