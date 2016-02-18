@@ -100,6 +100,11 @@ public class Solver {
     }
   }
 
+  @Override
+  public String toString() {
+    return puzzle.toString();
+  }
+
   private void candidateLines() {
     this.registers.forEach((Digit digit, Grid register) -> {
       register.forEachBox((Group box) -> {

@@ -109,6 +109,18 @@ public final class Grid {
     this.cells.get(coordinate).setContents(digit);
   }
 
+  @Override
+  public String toString() {
+    String result = "";
+    for (Coordinate coord : Coordinate.COORDINATES) {
+      result += this.cells.get(coord);
+      if (coord.getB().equals(Digit.valueOf(Digit.values().length))) {
+        result += "\n";
+      }
+    }
+    return result;
+  }
+
   private void cellGen(Cell[][] protoCells) {
     for (int i = 0; i < Digit.values().length; i++) {
       for (int j = 0; j < Digit.values().length; j++) {
