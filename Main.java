@@ -39,26 +39,26 @@ public class Main {
     if (args.length != 1) {
       Logger.getGlobal().log(Level.SEVERE,
           "usage: Java Sudoku-Solver <filename>");
-      return;
+      System.exit(1);
     }
 
     File file = new File(args[0]);
     if (!file.exists()) {
       Logger.getGlobal().log(Level.SEVERE,
           "{0} does not exist", args[0]);
-      return;
+      System.exit(1);
     }
     if (file.isDirectory()) {
       Logger.getGlobal().log(Level.SEVERE, "{0} is a directory", args[0]);
-      return;
+      System.exit(1);
     }
     if (!file.isFile()) {
       Logger.getGlobal().log(Level.SEVERE, "{0} is invalid", args[0]);
-      return;
+      System.exit(1);
     }
     if (!file.canRead()) {
       Logger.getGlobal().log(Level.SEVERE, "{0} cannot be read", args[0]);
-      return;
+      System.exit(1);
     }
 
     try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
