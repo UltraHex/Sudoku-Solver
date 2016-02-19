@@ -92,7 +92,7 @@ public class Solver {
 
   @Override
   public String toString() {
-    return puzzle.toString();
+    return this.puzzle.toString();
   }
 
   private void candidateLines() {
