@@ -54,9 +54,11 @@ public class Main {
     }
     if (!file.isFile()) {
       Logger.getGlobal().log(Level.SEVERE, "{0} is invalid", args[0]);
+      return;
     }
     if (!file.canRead()) {
       Logger.getGlobal().log(Level.SEVERE, "{0} cannot be read", args[0]);
+      return;
     }
 
     try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
