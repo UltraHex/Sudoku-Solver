@@ -21,10 +21,9 @@ package sudoku;
 
 import static sudoku.Coordinate.COORDINATES;
 import static sudoku.Digit.ONE;
-import static sudoku.Digit.TWO;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -33,25 +32,15 @@ import java.util.function.Consumer;
  */
 public class Solver {
 
-  private static Digit[] candidates(Group group, Digit digit) {
-    Digit[] candidates = new Digit[digit.getValue()];
-    int count = 0;
-    for (Map.Entry<Digit, Cell> entry : group.getCells().entrySet()) {
-      Cell cell = entry.getValue();
-      if (cell.getContents() == null) {
-        if (count == digit.getValue()) {
-          return null;
-        }
-
-        candidates[count] = entry.getKey();
-        count++;
+  private static Digit[] candidates(Group group) {
+    ArrayList<Digit> candidates = new ArrayList<>(0);
+    for (Digit digit : Digit.values()) {
+      if (group.getCell(digit).getContents() == null) {
+        candidates.add(digit);
       }
     }
 
-    if (count == digit.getValue()) {
-      return candidates;
-    }
-    return null;
+    return candidates.toArray(new Digit[candidates.size()]);
   }
 
   private final LinkedHashMap<Digit, SuperGroup> boxVerticals =
@@ -109,8 +98,8 @@ public class Solver {
   private void candidateLines() {
     this.registers.forEach((Digit digit, Grid register) -> {
       register.forEachBox((Group box) -> {
-        Digit[] candidates = candidates(box, TWO);
-        if (candidates != null) {
+        Digit[] candidates = candidates(box);
+        if (candidates.length == 2) {
           Cell cell1 = box.getCell(candidates[0]);
           Cell cell2 = box.getCell(candidates[1]);
           Coordinate coordinate1 = cell1.getCoordinate();
@@ -153,24 +142,24 @@ public class Solver {
   private void singleCandidate() {
     this.registers.forEach((Digit digit, Grid register) -> {
       register.forEachBox((Group box) -> {
-        Digit[] candidates = candidates(box, ONE);
-        if (candidates != null) {
+        Digit[] candidates = candidates(box);
+        if (candidates.length == 1) {
           this.puzzle.getCell(box.getCell(candidates[0])
               .getCoordinate()).setContents(digit);
           this.hasChanged = true;
         }
       });
       register.forEachRow((Group row) -> {
-        Digit[] candidates = candidates(row, ONE);
-        if (candidates != null) {
+        Digit[] candidates = candidates(row);
+        if (candidates.length == 1) {
           this.puzzle.getCell(row.getCell(candidates[0])
               .getCoordinate()).setContents(digit);
           this.hasChanged = true;
         }
       });
       register.forEachColumn((Group column) -> {
-        Digit[] candidates = candidates(column, ONE);
-        if (candidates != null) {
+        Digit[] candidates = candidates(column);
+        if (candidates.length == 1) {
           this.puzzle.getCell(column.getCell(candidates[0])
               .getCoordinate()).setContents(digit);
           this.hasChanged = true;
@@ -179,8 +168,8 @@ public class Solver {
     });
 
     this.cellVerticals.forEach((Coordinate coordinate, Group vertical) -> {
-      Digit[] candidates = candidates(vertical, ONE);
-      if (candidates != null) {
+      Digit[] candidates = candidates(vertical);
+      if (candidates.length == 1) {
         this.puzzle.getCell(coordinate).setContents(candidates[0]);
         this.hasChanged = true;
       }
