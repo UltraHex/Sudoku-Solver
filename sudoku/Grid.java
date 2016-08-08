@@ -20,7 +20,7 @@
 package sudoku;
 
 import java.util.LinkedHashMap;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 /**
  *
@@ -69,32 +69,32 @@ public final class Grid {
     }
   }
 
-  public void forEachBox(Consumer<? super Group> action) {
-    this.boxes.forEachGroup(action);
+  public void forEachBox(BiConsumer<? super Digit, ? super Group> action) {
+    this.boxes.forEach(action);
   }
 
-  public void forEachCell(Consumer<? super Cell> action) {
-    this.cells.values().forEach(action);
+  public void forEachCell(BiConsumer<? super Coordinate, ? super Cell> action) {
+    this.cells.forEach(action);
   }
 
-  public void forEachCellInBox(Digit box, Consumer<? super Cell> action) {
-    this.boxes.getGroup(box).forEachCell(action);
+  public void forEachCellInBox(Digit box, BiConsumer<? super Digit, ? super Cell> action) {
+    this.boxes.getGroup(box).forEach(action);
   }
 
-  public void forEachCellInColumn(Digit column, Consumer<? super Cell> action) {
-    this.columns.getGroup(column).forEachCell(action);
+  public void forEachCellInColumn(Digit column, BiConsumer<? super Digit, ? super Cell> action) {
+    this.columns.getGroup(column).forEach(action);
   }
 
-  public void forEachCellInRow(Digit row, Consumer<? super Cell> action) {
-    this.rows.getGroup(row).forEachCell(action);
+  public void forEachCellInRow(Digit row, BiConsumer<? super Digit, ? super Cell> action) {
+    this.rows.getGroup(row).forEach(action);
   }
 
-  public void forEachColumn(Consumer<? super Group> action) {
-    this.columns.forEachGroup(action);
+  public void forEachColumn(BiConsumer<? super Digit, ? super Group> action) {
+    this.columns.forEach(action);
   }
 
-  public void forEachRow(Consumer<? super Group> action) {
-    this.rows.forEachGroup(action);
+  public void forEachRow(BiConsumer<? super Digit, ? super Group> action) {
+    this.rows.forEach(action);
   }
 
   public void setAll(Digit contents) {

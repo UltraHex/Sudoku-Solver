@@ -24,7 +24,7 @@ import static sudoku.Digit.ONE;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 /**
  *
@@ -96,8 +96,8 @@ public class Solver {
   }
 
   private void candidateLines() {
-    this.registers.forEach((Digit digit, Grid register) -> {
-      register.forEachBox((Group box) -> {
+    this.registers.forEach((Digit regi, Grid register) -> {
+      register.forEachBox((Digit boxi, Group box) -> {
         Digit[] candidates = candidates(box);
         if (candidates.length == 2) {
           Cell cell1 = box.getCell(candidates[0]);
@@ -105,7 +105,7 @@ public class Solver {
           Coordinate coordinate1 = cell1.getCoordinate();
           Coordinate coordinate2 = cell2.getCoordinate();
 
-          Consumer<Cell> eliminate = (Cell cell) -> {
+          BiConsumer<Digit, Cell> eliminate = (Digit celli, Cell cell) -> {
             if (!cell.getCoordinate().toBoxCoordinate().getA()
                 .equals(coordinate1.toBoxCoordinate().getA())) {
               cell.setContents(ONE);
@@ -141,30 +141,17 @@ public class Solver {
 
   private void singleCandidate() {
     this.registers.forEach((Digit digit, Grid register) -> {
-      register.forEachBox((Group box) -> {
-        Digit[] candidates = candidates(box);
+      BiConsumer<Digit, Group> singleCandidate = (Digit groupi, Group group) -> {
+        Digit[] candidates = candidates(group);
         if (candidates.length == 1) {
-          this.puzzle.getCell(box.getCell(candidates[0])
+          this.puzzle.getCell(group.getCell(candidates[0])
               .getCoordinate()).setContents(digit);
           this.hasChanged = true;
         }
-      });
-      register.forEachRow((Group row) -> {
-        Digit[] candidates = candidates(row);
-        if (candidates.length == 1) {
-          this.puzzle.getCell(row.getCell(candidates[0])
-              .getCoordinate()).setContents(digit);
-          this.hasChanged = true;
-        }
-      });
-      register.forEachColumn((Group column) -> {
-        Digit[] candidates = candidates(column);
-        if (candidates.length == 1) {
-          this.puzzle.getCell(column.getCell(candidates[0])
-              .getCoordinate()).setContents(digit);
-          this.hasChanged = true;
-        }
-      });
+      };
+      register.forEachBox(singleCandidate);
+      register.forEachRow(singleCandidate);
+      register.forEachColumn(singleCandidate);
     });
 
     this.cellVerticals.forEach((Coordinate coordinate, Group vertical) -> {
@@ -177,21 +164,21 @@ public class Solver {
   }
 
   private void updateRegisters() {
-    this.puzzle.forEachCell((Cell puzlleCell) -> {
+    this.puzzle.forEachCell((Coordinate coord, Cell puzlleCell) -> {
       if (puzlleCell.getContents() != null) {
-        this.cellVerticals.get(puzlleCell.getCoordinate()).forEachCell(
-            (Cell cell) -> cell.setContents(ONE));
+        this.cellVerticals.get(coord).forEach(
+            (Celli, cell) -> cell.setContents(ONE));
 
         Grid reg = this.registers.get(puzlleCell.getContents());
         reg.forEachCellInBox(
-            puzlleCell.getCoordinate().toBoxCoordinate().getA(),
-            (Cell cell) -> cell.setContents(ONE));
+            coord.toBoxCoordinate().getA(),
+            (celli, cell) -> cell.setContents(ONE));
         reg.forEachCellInRow(
             puzlleCell.getCoordinate().getA(),
-            (Cell cell) -> cell.setContents(ONE));
+            (celli, cell) -> cell.setContents(ONE));
         reg.forEachCellInColumn(
             puzlleCell.getCoordinate().getB(),
-            (Cell cell) -> cell.setContents(ONE));
+            (celli, cell) -> cell.setContents(ONE));
       }
     });
   }

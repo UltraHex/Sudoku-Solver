@@ -22,7 +22,6 @@ package sudoku;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 /**
  *
@@ -53,12 +52,8 @@ public final class Group {
     return Objects.equals(this.cells, other.cells);
   }
 
-  public void forEach(BiConsumer<Digit, Cell> action) {
+  public void forEach(BiConsumer<? super Digit, ? super Cell> action) {
     this.cells.forEach(action);
-  }
-
-  public void forEachCell(Consumer<? super Cell> action) {
-    this.cells.values().forEach(action);
   }
 
   public Cell getCell(Digit digit) {
