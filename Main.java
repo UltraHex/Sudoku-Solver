@@ -44,8 +44,7 @@ public class Main {
 
     File file = new File(args[0]);
     if (!file.exists()) {
-      Logger.getGlobal().log(Level.SEVERE,
-          "{0} does not exist", args[0]);
+      Logger.getGlobal().log(Level.SEVERE, "{0} does not exist", args[0]);
       System.exit(1);
     }
     if (file.isDirectory()) {
