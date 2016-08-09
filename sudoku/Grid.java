@@ -98,7 +98,7 @@ public final class Grid {
   }
 
   public void setAll(Digit contents) {
-    this.cells.values().forEach((Cell cell) -> cell.setContents(contents));
+    this.cells.values().forEach((cell) -> cell.setContents(contents));
   }
 
   public Cell getCell(Coordinate coor) {
