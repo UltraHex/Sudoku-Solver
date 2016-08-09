@@ -104,7 +104,7 @@ public class Solver {
           Coordinate coordinate1 = cell1.getCoordinate();
           Coordinate coordinate2 = cell2.getCoordinate();
 
-          BiConsumer<Digit, Cell> eliminate = (Digit celli, Cell cell) -> {
+          BiConsumer<Digit, Cell> filter = (Digit celli, Cell cell) -> {
             if (!cell.getCoordinate().toBoxCoordinate().getA()
                 .equals(coordinate1.toBoxCoordinate().getA())) {
               cell.setContents(ONE);
@@ -113,10 +113,10 @@ public class Solver {
 
           if (coordinate1.getA().equals(coordinate2.getA())) {
             register.forEachCellInRow(coordinate1.getA(),
-                eliminate);
+                filter);
           } else if (coordinate1.getB().equals(coordinate2.getB())) {
             register.forEachCellInColumn(coordinate1.getB(),
-                eliminate);
+                filter);
           }
         }
       });
