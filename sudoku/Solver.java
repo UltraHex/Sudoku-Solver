@@ -34,12 +34,11 @@ public class Solver {
 
   private static Digit[] candidates(Group group) {
     ArrayList<Digit> candidates = new ArrayList<>(0);
-    for (Digit digit : Digit.values()) {
-      if (group.getCell(digit).getContents() == null) {
+    group.forEach((digit, cell) -> {
+      if (cell.getContents() == null) {
         candidates.add(digit);
       }
-    }
-
+    });
     return candidates.toArray(new Digit[candidates.size()]);
   }
 
