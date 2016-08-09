@@ -98,26 +98,29 @@ public class Solver {
     this.registers.forEach((regi, register) -> {
       register.forEachBox((boxi, box) -> {
         Digit[] candidates = candidates(box);
-        if (candidates.length == 2) {
-          Cell cell1 = box.getCell(candidates[0]);
-          Cell cell2 = box.getCell(candidates[1]);
-          Coordinate coordinate1 = cell1.getCoordinate();
-          Coordinate coordinate2 = cell2.getCoordinate();
+        if (candidates.length < 2 || candidates.length > 3) {
+          return;
+        }
 
-          BiConsumer<Digit, Cell> filter = (celli, cell) -> {
-            if (!cell.getCoordinate().toBoxCoordinate().getA()
-                .equals(coordinate1.toBoxCoordinate().getA())) {
-              cell.setContents(ONE);
-            }
-          };
+        Digit row = box.getCell(candidates[0]).getCoordinate().getA();
+        Digit column = box.getCell(candidates[0]).getCoordinate().getB();
 
-          if (coordinate1.getA().equals(coordinate2.getA())) {
-            register.forEachCellInRow(coordinate1.getA(),
-                filter);
-          } else if (coordinate1.getB().equals(coordinate2.getB())) {
-            register.forEachCellInColumn(coordinate1.getB(),
-                filter);
+        BiConsumer<Digit, Cell> filter = (celli, cell) -> {
+          if (!cell.getCoordinate().toBoxCoordinate().getA().equals(boxi)) {
+            cell.setContents(ONE);
           }
+        };
+
+        if (box.getCell(candidates[1]).getCoordinate().getA().equals(row)) {
+          if (candidates.length == 3 && !box.getCell(candidates[2]).getCoordinate().getA().equals(row)) {
+            return;
+          }
+          register.forEachCellInRow(row, filter);
+        } else if (box.getCell(candidates[1]).getCoordinate().getB().equals(column)) {
+          if (candidates.length == 3 && !box.getCell(candidates[2]).getCoordinate().getB().equals(column)) {
+            return;
+          }
+          register.forEachCellInColumn(column, filter);
         }
       });
     });
