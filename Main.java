@@ -19,7 +19,6 @@
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
@@ -83,8 +82,6 @@ public class Main {
       Solver solver = new Solver(new Grid(puzzle));
       solver.solve();
       System.out.print(solver.toString());
-    } catch (FileNotFoundException ex) {
-      Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
       Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
     }
