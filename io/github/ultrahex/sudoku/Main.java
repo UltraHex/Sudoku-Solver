@@ -64,13 +64,13 @@ public class Main {
       Object[] lines = reader.lines().toArray();
       Digit[][] puzzle = new Digit[lines.length][lines.length];
       Arrays.parallelSetAll(puzzle, (i) -> {
-        String[] tokens = ((String) lines[i]).split(",");
+        char[] tokens = ((String) lines[i]).toCharArray();
         Digit[] row = new Digit[lines.length];
         Arrays.parallelSetAll(row,
             (j) -> {
-              String str = tokens[j];
-              if (str.matches("^[1-9]+$")) {
-                return Digit.valueOf(Integer.valueOf(str));
+              char c = tokens[j];
+              if (c >= '1' && c <= '9') {
+                return Digit.valueOf(Character.getNumericValue(c));
               } else {
                 return null;
               }
