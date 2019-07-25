@@ -82,7 +82,7 @@ public class Main {
 
       Solver solver = new Solver(new Grid(puzzle));
       solver.solve();
-      Logger.getGlobal().log(Level.INFO, "\n{0}", solver.toString());
+      System.out.print(solver.toString());
     } catch (FileNotFoundException ex) {
       Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
