@@ -71,7 +71,7 @@ public class Main {
         Arrays.parallelSetAll(row,
             (j) -> {
               String str = tokens[j];
-              if (str.matches("^\\d+$")) {
+              if (str.matches("^[1-9]+$")) {
                 return Digit.valueOf(Integer.valueOf(str));
               } else {
                 return null;
