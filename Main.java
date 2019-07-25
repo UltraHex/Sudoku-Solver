@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Matthew William Noel
+ * Copyright (C) 2015-2016, 2019 Matthew William Noel
  *
  * This file is part of Sudoku-Solver.
  *
@@ -35,28 +35,30 @@ import sudoku.Solver;
  */
 public class Main {
 
+  private static final Logger logger = Logger.getGlobal();
+
   public static void main(String[] args) {
     if (args.length != 1) {
-      Logger.getGlobal().log(Level.SEVERE,
+      logger.log(Level.INFO,
           "usage: Java Sudoku-Solver <filename>");
-      System.exit(1);
+      System.exit(0);
     }
 
     File file = new File(args[0]);
     if (!file.exists()) {
-      Logger.getGlobal().log(Level.SEVERE, "{0} does not exist", args[0]);
+      logger.log(Level.SEVERE, "{0} does not exist", args[0]);
       System.exit(1);
     }
     if (file.isDirectory()) {
-      Logger.getGlobal().log(Level.SEVERE, "{0} is a directory", args[0]);
+      logger.log(Level.SEVERE, "{0} is a directory", args[0]);
       System.exit(1);
     }
     if (!file.isFile()) {
-      Logger.getGlobal().log(Level.SEVERE, "{0} is invalid", args[0]);
+      logger.log(Level.SEVERE, "{0} is invalid", args[0]);
       System.exit(1);
     }
     if (!file.canRead()) {
-      Logger.getGlobal().log(Level.SEVERE, "{0} cannot be read", args[0]);
+      logger.log(Level.SEVERE, "{0} cannot be read", args[0]);
       System.exit(1);
     }
 
