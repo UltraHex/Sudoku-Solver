@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package sudoku;
+package io.github.ultrahex.sudoku;
 
 import java.util.LinkedHashMap;
 import java.util.Objects;
@@ -27,18 +27,19 @@ import java.util.function.BiConsumer;
  *
  * @author Matthew William Noel
  */
-public final class Group {
+public class SuperGroup {
 
-  private final LinkedHashMap<Digit, Cell> cells =
+  private final LinkedHashMap<Digit, Group> groups =
       new LinkedHashMap<>(Digit.values().length);
 
-  Group(Cell[] cells) {
-    if (cells.length != Digit.values().length) {
-      throw new IllegalArgumentException("Groups must contain exactly "
-          + Digit.values().length + " Cells");
+  public SuperGroup(Group[] groups) {
+    if (groups.length != Digit.values().length) {
+      throw new IllegalArgumentException(
+          "SuperGroups must contain exactly " + Digit.values().length
+          + " Groups");
     }
-    for (int i = 0; i < cells.length; i++) {
-      this.cells.put(Digit.values()[i], cells[i]);
+    for (int i = 0; i < groups.length; i++) {
+      this.groups.put(Digit.values()[i], groups[i]);
     }
   }
 
@@ -48,27 +49,27 @@ public final class Group {
     if (obj == null || this.getClass() != obj.getClass()) {
       return false;
     }
-    final Group other = (Group) obj;
-    return Objects.equals(this.cells, other.cells);
+    final SuperGroup other = (SuperGroup) obj;
+    return Objects.equals(this.groups, other.groups);
   }
 
-  public void forEach(BiConsumer<? super Digit, ? super Cell> action) {
-    this.cells.forEach(action);
+  public void forEach(BiConsumer<? super Digit, ? super Group> action) {
+    this.groups.forEach(action);
   }
 
-  public Cell getCell(Digit digit) {
-    return this.cells.get(digit);
+  public Group getGroup(Digit digit) {
+    return this.groups.get(digit);
   }
 
   @SuppressWarnings("unchecked")
-  public LinkedHashMap<Digit, Cell> getCells() {
-    return (LinkedHashMap<Digit, Cell>) this.cells.clone();
+  public LinkedHashMap<Digit, Group> getGroups() {
+    return (LinkedHashMap<Digit, Group>) this.groups.clone();
   }
 
   @Override
   public int hashCode() {
     int hash = 7;
-    hash = 23 * hash + Objects.hashCode(this.cells);
+    hash = 89 * hash + Objects.hashCode(this.groups);
     return hash;
   }
 }

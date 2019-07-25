@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package sudoku;
+package io.github.ultrahex.sudoku;
 
 import java.util.LinkedHashMap;
 import java.util.function.BiConsumer;

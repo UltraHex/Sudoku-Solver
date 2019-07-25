@@ -17,10 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package sudoku;
+package io.github.ultrahex.sudoku;
 
-import static sudoku.Coordinate.COORDINATES;
-import static sudoku.Digit.ONE;
+import static io.github.ultrahex.sudoku.Coordinate.COORDINATES;
+import static io.github.ultrahex.sudoku.Digit.ONE;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
