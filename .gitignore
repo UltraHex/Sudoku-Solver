@@ -1,3 +1,5 @@
-**/.idea
-**/*.iml
-**/*___jb_tmp___
+*
+!.gitignore
+!io/github/ultrahex
+!LICENSE
+!README.md
