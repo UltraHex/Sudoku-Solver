@@ -43,7 +43,6 @@ public class SuperGroup {
   }
 
   @Override
-  @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
   public boolean equals(Object obj) {
     if (obj == null || this.getClass() != obj.getClass()) {
       return false;

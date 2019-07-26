@@ -99,7 +99,6 @@ public final class Coordinate {
   }
 
   @Override
-  @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
   public boolean equals(Object obj) {
     if (obj == null) {
       return false;

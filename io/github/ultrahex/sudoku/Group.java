@@ -42,7 +42,6 @@ public final class Group {
   }
 
   @Override
-  @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
   public boolean equals(Object obj) {
     if (obj == null || this.getClass() != obj.getClass()) {
       return false;
