@@ -45,8 +45,8 @@ public final class Cell implements Cloneable {
 
   @Override
   public boolean equals(Object obj) {
-    return (obj instanceof Cell) ? this.contents.equals(
-        ((Cell) obj).getContents()) : false;
+    return (obj instanceof Cell) && this.contents.equals(
+        ((Cell) obj).getContents());
   }
 
   public Digit getContents() {
