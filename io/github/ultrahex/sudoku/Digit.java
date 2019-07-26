@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Matthew William Noel
+ * Copyright © 2015-2016, 2019 Matthew William Noel
  *
  * This file is part of Sudoku-Solver.
  *
@@ -20,12 +20,18 @@
 package io.github.ultrahex.sudoku;
 
 /**
- *
  * @author Matthew William Noel
  */
 public enum Digit {
 
-  ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8),
+  ONE(1),
+  TWO(2),
+  THREE(3),
+  FOUR(4),
+  FIVE(5),
+  SIX(6),
+  SEVEN(7),
+  EIGHT(8),
   NINE(9);
 
   private final int value;

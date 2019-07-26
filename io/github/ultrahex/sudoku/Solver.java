@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Matthew William Noel
+ * Copyright © 2015-2016, 2019 Matthew William Noel
  *
  * This file is part of Sudoku-Solver.
  *
@@ -27,7 +27,6 @@ import java.util.LinkedHashMap;
 import java.util.function.BiConsumer;
 
 /**
- *
  * @author Matthew William Noel
  */
 public class Solver {
@@ -112,12 +111,14 @@ public class Solver {
         };
 
         if (box.getCell(candidates[1]).getCoordinate().getA().equals(row)) {
-          if (candidates.length == 3 && !box.getCell(candidates[2]).getCoordinate().getA().equals(row)) {
+          if (candidates.length == 3 && !box.getCell(candidates[2]).getCoordinate().getA()
+              .equals(row)) {
             return;
           }
           register.forEachCellInRow(row, filter);
         } else if (box.getCell(candidates[1]).getCoordinate().getB().equals(column)) {
-          if (candidates.length == 3 && !box.getCell(candidates[2]).getCoordinate().getB().equals(column)) {
+          if (candidates.length == 3 && !box.getCell(candidates[2]).getCoordinate().getB()
+              .equals(column)) {
             return;
           }
           register.forEachCellInColumn(column, filter);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Matthew William Noel
+ * Copyright © 2015-2016, 2019 Matthew William Noel
  *
  * This file is part of Sudoku-Solver.
  *
@@ -24,7 +24,6 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 
 /**
- *
  * @author Matthew William Noel
  */
 public final class Group {

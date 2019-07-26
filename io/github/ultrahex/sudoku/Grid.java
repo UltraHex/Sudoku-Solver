@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Matthew William Noel
+ * Copyright © 2015-2016, 2019 Matthew William Noel
  *
  * This file is part of Sudoku-Solver.
  *
@@ -23,7 +23,6 @@ import java.util.LinkedHashMap;
 import java.util.function.BiConsumer;
 
 /**
- *
  * @author Matthew William Noel
  */
 public final class Grid {
@@ -133,7 +132,8 @@ public final class Grid {
     }
   }
 
-  private void groupGen(Cell[][] protoCells, Group[] protoBoxes, Group[] protoColumns, Group[] protoRows) {
+  private void groupGen(Cell[][] protoCells, Group[] protoBoxes, Group[] protoColumns,
+      Group[] protoRows) {
     for (Digit i : Digit.values()) {
       Cell[] box = new Cell[Digit.values().length];
       Cell[] column = new Cell[Digit.values().length];

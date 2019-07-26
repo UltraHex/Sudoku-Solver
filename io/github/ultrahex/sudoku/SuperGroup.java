@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Matthew William Noel
+ * Copyright © 2015-2016, 2019 Matthew William Noel
  *
  * This file is part of Sudoku-Solver.
  *
@@ -24,7 +24,6 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 
 /**
- *
  * @author Matthew William Noel
  */
 public class SuperGroup {
@@ -36,7 +35,7 @@ public class SuperGroup {
     if (groups.length != Digit.values().length) {
       throw new IllegalArgumentException(
           "SuperGroups must contain exactly " + Digit.values().length
-          + " Groups");
+              + " Groups");
     }
     for (int i = 0; i < groups.length; i++) {
       this.groups.put(Digit.values()[i], groups[i]);
