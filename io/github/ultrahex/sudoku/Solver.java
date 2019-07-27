@@ -24,6 +24,7 @@ import static io.github.ultrahex.sudoku.Digit.ONE;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.function.BiConsumer;
 
 /**
@@ -41,17 +42,17 @@ public class Solver {
     return candidates.toArray(new Digit[0]);
   }
 
-  private final LinkedHashMap<Digit, SuperGroup> boxVerticals =
+  private final Map<Digit, SuperGroup> boxVerticals =
       new LinkedHashMap<>(Digit.values().length);
-  private final LinkedHashMap<Coordinate, Group> cellVerticals =
+  private final Map<Coordinate, Group> cellVerticals =
       new LinkedHashMap<>(Digit.values().length ^ 2);
-  private final LinkedHashMap<Digit, SuperGroup> columnVerticals =
+  private final Map<Digit, SuperGroup> columnVerticals =
       new LinkedHashMap<>(Digit.values().length);
   private boolean hasChanged;
   private final Grid puzzle;
-  private final LinkedHashMap<Digit, Grid> registers =
+  private final Map<Digit, Grid> registers =
       new LinkedHashMap<>(Digit.values().length);
-  private final LinkedHashMap<Digit, SuperGroup> rowVerticals =
+  private final Map<Digit, SuperGroup> rowVerticals =
       new LinkedHashMap<>(Digit.values().length);
 
   public Solver(Grid puzzle) {
