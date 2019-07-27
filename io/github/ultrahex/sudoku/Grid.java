@@ -110,14 +110,14 @@ public final class Grid {
 
   @Override
   public String toString() {
-    String result = "";
+    StringBuilder builder = new StringBuilder();
     for (Coordinate coord : Coordinate.COORDINATES) {
-      result += this.cells.get(coord);
+      builder.append(this.cells.get(coord));
       if (coord.getB().equals(Digit.valueOf(Digit.values().length))) {
-        result += "\n";
+        builder.append("\n");
       }
     }
-    return result;
+    return builder.toString();
   }
 
   private void cellGen(Cell[][] protoCells) {
