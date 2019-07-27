@@ -38,7 +38,7 @@ public class Solver {
         candidates.add(digit);
       }
     });
-    return candidates.toArray(new Digit[candidates.size()]);
+    return candidates.toArray(new Digit[0]);
   }
 
   private final LinkedHashMap<Digit, SuperGroup> boxVerticals =
