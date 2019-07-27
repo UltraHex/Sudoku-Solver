@@ -95,37 +95,35 @@ public class Solver {
   }
 
   private void candidateLines() {
-    this.registers.forEach((regi, register) -> {
-      register.forEachBox((boxi, box) -> {
-        Digit[] candidates = candidates(box);
-        if (candidates.length < 2 || candidates.length > 3) {
+    this.registers.forEach((regi, register) -> register.forEachBox((boxi, box) -> {
+      Digit[] candidates = candidates(box);
+      if (candidates.length < 2 || candidates.length > 3) {
+        return;
+      }
+
+      Digit row = box.getCell(candidates[0]).getCoordinate().getA();
+      Digit column = box.getCell(candidates[0]).getCoordinate().getB();
+
+      BiConsumer<Digit, Cell> filter = (celli, cell) -> {
+        if (!cell.getCoordinate().toBoxCoordinate().getA().equals(boxi)) {
+          cell.setContents(ONE);
+        }
+      };
+
+      if (box.getCell(candidates[1]).getCoordinate().getA().equals(row)) {
+        if (candidates.length == 3 && !box.getCell(candidates[2]).getCoordinate().getA()
+            .equals(row)) {
           return;
         }
-
-        Digit row = box.getCell(candidates[0]).getCoordinate().getA();
-        Digit column = box.getCell(candidates[0]).getCoordinate().getB();
-
-        BiConsumer<Digit, Cell> filter = (celli, cell) -> {
-          if (!cell.getCoordinate().toBoxCoordinate().getA().equals(boxi)) {
-            cell.setContents(ONE);
-          }
-        };
-
-        if (box.getCell(candidates[1]).getCoordinate().getA().equals(row)) {
-          if (candidates.length == 3 && !box.getCell(candidates[2]).getCoordinate().getA()
-              .equals(row)) {
-            return;
-          }
-          register.forEachCellInRow(row, filter);
-        } else if (box.getCell(candidates[1]).getCoordinate().getB().equals(column)) {
-          if (candidates.length == 3 && !box.getCell(candidates[2]).getCoordinate().getB()
-              .equals(column)) {
-            return;
-          }
-          register.forEachCellInColumn(column, filter);
+        register.forEachCellInRow(row, filter);
+      } else if (box.getCell(candidates[1]).getCoordinate().getB().equals(column)) {
+        if (candidates.length == 3 && !box.getCell(candidates[2]).getCoordinate().getB()
+            .equals(column)) {
+          return;
         }
-      });
-    });
+        register.forEachCellInColumn(column, filter);
+      }
+    }));
   }
 
   private void initRegisters() {
